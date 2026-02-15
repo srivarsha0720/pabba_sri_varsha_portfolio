@@ -95,17 +95,7 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const validateForm = () => {
-    const errors: { [key: string]: string } = {};
-    if (!formData.name.trim()) errors.name = 'Name is required';
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = 'Invalid email format';
-    }
-    if (!formData.message.trim()) errors.message = 'Message is required';
-    return errors;
-  };
+
 const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -118,7 +108,8 @@ const handleChange = (
   };
  const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
-let errors: { [key: string]: string } = {};
+
+  const errors: { [key: string]: string } = {};
 
   if (!formData.name.trim()) {
     errors.name = "Name is required";
@@ -126,6 +117,8 @@ let errors: { [key: string]: string } = {};
 
   if (!formData.email.trim()) {
     errors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    errors.email = "Invalid email format";
   }
 
   if (!formData.message.trim()) {
@@ -134,28 +127,34 @@ let errors: { [key: string]: string } = {};
 
   if (Object.keys(errors).length > 0) {
     setFormErrors(errors);
-    return; // stop sending email
+    return;
   }
 
-  setFormErrors({}); // clear old errors
-  emailjs.send(
-    "service_fwbit2q",     // your Service ID
-    "template_qzrtew5",   // your Template ID
-    {
-      from_name: formData.name,
-      from_email: formData.email,
-      message: formData.message,
-    },
-    "DzWATDEwljyCm3ACh"      // replace this
-  )
-  .then(() => {
-    setFormSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
-  })
-  .catch((error) => {
-    console.error("EmailJS Error:", error);
-  });
+  setFormErrors({});
+
+  emailjs
+    .send(
+      "service_fwbit2q",
+      "template_qzrtew5",
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+      },
+      "DzWATDEwljyCm3ACh"
+    )
+    .then(() => {
+      setFormSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+    })
+    .catch((error) => {
+      console.error("EmailJS Error:", error);
+    });
 };
+
+  
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
@@ -519,7 +518,7 @@ let errors: { [key: string]: string } = {};
     required  />
     {formErrors.email && (
   <p className="mt-1 text-sm text-red-600">
-    {formErrors.email}
+    {formErrors.name}
   </p>
 )}
                    
@@ -750,4 +749,5 @@ let errors: { [key: string]: string } = {};
       )}
     </div>
   );
-}
+
+};
