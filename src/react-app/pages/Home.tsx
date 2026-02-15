@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowDown, Github, Linkedin, Mail, ChevronUp, ExternalLink } from 'lucide-react';
+import emailjs from "@emailjs/browser";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,8 +9,12 @@ export default function Home() {
   const [typedText, setTypedText] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
+ const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+ const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
   const fullText = "Full Stack Developer | Building Scalable Web Apps | Tech Enthusiast";
   
@@ -101,32 +106,56 @@ export default function Home() {
     if (!formData.message.trim()) errors.message = 'Message is required';
     return errors;
   };
+const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const errors = validateForm();
-    if (Object.keys(errors).length === 0) {
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          setFormSubmitted(true);
-          setFormData({ name: '', email: '', message: '' });
-          setTimeout(() => setFormSubmitted(false), 5000);
-        } else {
-          setFormErrors({ message: 'Failed to send message. Please try again.' });
-        }
-      } catch (error) {
-        setFormErrors({ message: 'Failed to send message. Please try again.' });
-      }
-    } else {
-      setFormErrors(errors);
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+ const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+let errors: { [key: string]: string } = {};
+
+  if (!formData.name.trim()) {
+    errors.name = "Name is required";
+  }
+
+  if (!formData.email.trim()) {
+    errors.email = "Email is required";
+  }
+
+  if (!formData.message.trim()) {
+    errors.message = "Message is required";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    setFormErrors(errors);
+    return; // stop sending email
+  }
+
+  setFormErrors({}); // clear old errors
+  emailjs.send(
+    "service_fwbit2q",     // your Service ID
+    "template_qzrtew5",   // your Template ID
+    {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+    },
+    "DzWATDEwljyCm3ACh"      // replace this
+  )
+  .then(() => {
+    setFormSubmitted(true);
+    setFormData({ name: "", email: "", message: "" });
+  })
+  .catch((error) => {
+    console.error("EmailJS Error:", error);
+  });
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
@@ -482,17 +511,19 @@ export default function Home() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     value={formData.name}
-                    onChange={(e) => {
-                      setFormData({ ...formData, name: e.target.value });
-                      setFormErrors({ ...formErrors, name: '' });
-                    }}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:border-blue-600 dark:focus:border-blue-400 transition-all text-slate-900 dark:text-slate-100"
-                    placeholder="Your name"
-                  />
-                  {formErrors.name && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{formErrors.name}</p>
-                  )}
+                    onChange={handleChange }
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-blue-500"
+    placeholder="Your name"
+    required  />
+    {formErrors.email && (
+  <p className="mt-1 text-sm text-red-600">
+    {formErrors.email}
+  </p>
+)}
+                   
+                
                 </div>
 
                 <div>
@@ -501,17 +532,20 @@ export default function Home() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     value={formData.email}
-                    onChange={(e) => {
-                      setFormData({ ...formData, email: e.target.value });
-                      setFormErrors({ ...formErrors, email: '' });
-                    }}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:border-blue-600 dark:focus:border-blue-400 transition-all text-slate-900 dark:text-slate-100"
-                    placeholder="your.email@example.com"
-                  />
-                  {formErrors.email && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{formErrors.email}</p>
-                  )}
+                  
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-blue-500"
+    placeholder="your.email@example.com"
+    required/>
+    {formErrors.email && (
+  <p className="mt-1 text-sm text-red-600">
+    {formErrors.email}
+  </p>
+)}
+                  
+                 
                 </div>
 
                 <div>
@@ -519,18 +553,20 @@ export default function Home() {
                     Message
                   </label>
                   <textarea
+                  name="message"
                     value={formData.message}
-                    onChange={(e) => {
-                      setFormData({ ...formData, message: e.target.value });
-                      setFormErrors({ ...formErrors, message: '' });
-                    }}
+                    onChange={handleChange}
                     rows={4}
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-400 focus:border-blue-600 dark:focus:border-blue-400 transition-all resize-none text-slate-900 dark:text-slate-100"
-                    placeholder="Your message..."
-                  />
-                  {formErrors.message && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{formErrors.message}</p>
-                  )}
+                    placeholder="Your message..."/>
+                    {formErrors.message && (
+  <p className="mt-1 text-sm text-red-600">
+    {formErrors.message}
+  </p>
+)}
+                  
+                  
+                  
                 </div>
 
                 <button
