@@ -324,7 +324,7 @@ const handleChange = (
       <section id="skills" className="py-20 px-6 bg-gradient-to-b from-white to-blue-50/30 dark:from-slate-900 dark:to-slate-900/50 relative">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            My Skills
+             Skills
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -426,7 +426,7 @@ const handleChange = (
       <section id="projects" className="py-20 px-6 relative">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            My Projects
+             Projects
           </h2>
 
           <div className="max-w-3xl mx-auto">
@@ -439,23 +439,23 @@ const handleChange = (
               <div className="aspect-video overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
                 <img 
-                  src="https://019c5ee8-1bd7-7cd5-ba9a-97eb40f5d2b5.mochausercontent.com/time-tracker-dashboard.png"
-                  alt="Time Tracker Dashboard"
+                  src="https://images.moneycontrol.com/static-mcnews/2017/08/crowdfunding.jpg?impolicy=website&width=1600&height=900"
+                  alt="FundSpark - Crowdfunding Platform "
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
               
               <div className="p-8 relative">
                 <h3 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  Time Tracker and Analytics Dashboard
+                  FundSpark - Crowdfunding Platform
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                  A web-based application to track activities using manual entry and live timer. 
-                  Designed an interactive dashboard with timeline, pie chart, and bar chart for data visualization.
+                  Developed a full-stack crowdfunding application enabling users to create campaigns, set funding goals, rewards, and milestones.
+                  Designed and integrated secure authentication and dynamic project management features to handle user contributions and funding progress visualization.
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {['React.js', 'Node.js', 'Express.js', 'JavaScript', 'HTML', 'CSS'].map((tech) => (
+                  {['React.js', 'Node.js', 'Express.js', 'JavaScript','Supabase','HTML5', 'Tailwind CSS', ].map((tech) => (
                     <span
                       key={tech}
                       className="px-4 py-2 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-semibold border border-blue-200 dark:border-blue-800"
@@ -463,11 +463,12 @@ const handleChange = (
                       {tech}
                     </span>
                   ))}
+                  
                 </div>
 
                 <div className="flex gap-4">
                   <a
-                    href="https://github.com/srivarsha0720/Time-Tracker"
+                    href="https://github.com/srivarsha0720/fundspark-frontend"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
@@ -477,7 +478,7 @@ const handleChange = (
                     View Code
                   </a>
                   <a
-                    href="https://2wkzldu2bjztc.mocha.app/"
+                    href="https://fundspark-crowd.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
