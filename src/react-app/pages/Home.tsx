@@ -375,7 +375,7 @@ const handleChange = (
                 </div>
                 <h3 className="text-2xl font-bold mb-5 text-blue-600 dark:text-blue-400">Database</h3>
                 <div className="space-y-3">
-                  {['Firebase', 'Supabase'].map((skill) => (
+                  {[ 'Supabase','Firebase'].map((skill) => (
                     <div key={skill} className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full animate-pulse" />
                       <span className="text-slate-700 dark:text-slate-300 font-medium">{skill}</span>
