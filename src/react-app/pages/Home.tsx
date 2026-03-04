@@ -300,7 +300,7 @@ const handleChange = (
                 I specialize in building responsive, user-friendly web applications that solve real-world problems.
               </p>
               <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                With hands-on experience in HTML, CSS, JavaScript, React.js, Node.js, Express.js, and RESTful APIs, 
+                With hands-on experience in HTML, CSS, JavaScript, React.js, Node.js, Express.js, and MySQL, 
                 I enjoy transforming ideas into functional and scalable digital solutions. I'm a quick learner who adapts 
                 to new technologies and continuously improves my skills to stay updated in the ever-evolving tech world.
               </p>
